@@ -6,13 +6,16 @@
 import random
 
 print('WELCOME TO THE GUESSING GAME')
-print('ENTER ANY LETTER TO QUIT \n \n \n \n')
+print('ENTER QUIT TO QUIT \n \n \n \n')
 
 
 def ValidInput():
     tries = 0 #3 Tries to enter a valid number
     while tries < 3:
         UserNum = input("Enter any number from 0 to 100:          ")
+
+        if UserNum == "QUIT" or UserNum == "quit" or UserNum == "Quit":
+            return "QUIT"
     
         if not UserNum.isdigit():
             print("Not a number enter numbers only: ")
@@ -24,10 +27,12 @@ def ValidInput():
             print("Number is out of bounds must be between 0 and 100\n")
             tries += 1
             continue
-        return int(UserNum)
-    
-    print("Too many attemps")
-    return None
+
+        if tries >= 3:
+            print("Too many attemps")
+            return
+        
+        return int(UserNum) 
 
 
 
@@ -43,6 +48,10 @@ def Guess():
         UserNum = ValidInput()
         if UserNum is None:
             print("Game over, too many wrong attemps")
+            return
+        
+        elif UserNum is "QUIT":
+            print(f"Sorry you quit, the right number was {RandomNum}")
             return
         
         NumGuesses += 1

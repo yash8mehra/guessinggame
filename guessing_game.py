@@ -10,18 +10,19 @@ print('ENTER QUIT TO QUIT \n \n \n \n')
 
 
 class NumberGuessingGame:
-    def __init__(self, Min, Max, GuessNum, MaxGuess = None):
+    def __init__(self, Min, Max, MaxGuess = None):
         self.Min = Min #This will basically be all 0 anyway but no magic nums
         self.Max = Max #Max Number range
         self.MaxGuess = MaxGuess #none is infinite
         self.RandomNum = random.randint(Min,Max)
-        self.GuessNum = GuessNum #how many guesses so far
+        self.NumGuess = 0 #how many guesses so far
 
     def MakeGuess(self, UserNum): #Checking for high/low or out of guesses
-        if (self.GuessNum >= self.MaxGuess) and (self.MaxGuess != None):
-            return "No_Guess"
+        self.NumGuess += 1
 
-        self.GuessNum += 1
+        if (self.MaxGuess is not None) and (self.NumGuess >= self.MaxGuess):
+            return "No_Guess" #You ran out of guesses :(
+
 
         if (UserNum > self.RandomNum):
             return "High"
@@ -51,8 +52,9 @@ def ValidInput(play):
             tries += 1
             continue
         
-        return int(UserNum) 
-
+        return int(UserNum)
+    print("\nYou got it wrong too many times") 
+    return "QUIT"
 
          
 
@@ -72,6 +74,15 @@ def main(Min = 0, Max = 100, MaxGuess = None):
         if result == "No_Guess":
             print(f'You ran out of guesses the correct number was {play.RandomNum}')
             return
+        elif result == "Low":
+            print("Choose a higher number")
+        elif result == "High":
+            print("Choose a lower number")
+        elif result == "Correct":
+            print(f"YAYYYY!! You got it in {play.NumGuess}")
+            return
+        
+
         
         
 

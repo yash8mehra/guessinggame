@@ -10,20 +10,32 @@ print('ENTER QUIT TO QUIT \n \n \n \n')
 
 
 class NumberGuessingGame:
-    def __init__(self, Min, Max, GuessNum):
-        self.Min = Min #This will basically be all 0 anyway but we dont want magic numbers :)
-        self.Max = Max
-        self.GuessNum = GuessNum
-        #Bottom are determined by the game Top are determined by the user
+    def __init__(self, Min, Max, GuessNum, MaxGuess = None):
+        self.Min = Min #This will basically be all 0 anyway but no magic nums
+        self.Max = Max #Max Number range
+        self.MaxGuess = MaxGuess #none is infinite
         self.RandomNum = random.randint(Min,Max)
-        self.guesses = 0
+        self.GuessNum = GuessNum #how many guesses so far
+
+    def MakeGuess(self, UserNum): #Checking for high/low or out of guesses
+        if (self.guesses >= self.MaxGuess) and (self.MaxGuess != None):
+            return "No Guess"
+
+        self.GuessNum += 1
+
+        if (UserNum > self.RandomNum):
+            return "High"
+        elif (UserNum < self.RandomNum):
+            return "Low"
+        else:
+            return "Correct"
         
 
 
-def ValidInput():
+def ValidInput(play):
     tries = 0 #3 Tries to enter a valid number
     while tries < 3:
-        UserNum = input("Enter any number from 0 to 100:          ")
+        UserNum = input(f"Enter a number between {play.Min} to {play.Max}:          ") #I'll add with variable later
 
         if UserNum == "QUIT" or UserNum == "quit" or UserNum == "Quit":
             return "QUIT"
@@ -34,8 +46,8 @@ def ValidInput():
             continue
     
 
-        if int(UserNum) < 0 or int(UserNum) > 100:
-            print("Number is out of bounds must be between 0 and 100\n")
+        if int(UserNum) < min or int(UserNum) > max:
+            print(f"Number is out of bounds must be between {play.Min} and {play.Max}\n")
             tries += 1
             continue
 
@@ -46,36 +58,19 @@ def ValidInput():
         return int(UserNum) 
 
 
+         
 
 
-def Guess():
-    RandomNum = random.randint(1,100)
-    print(f'random number is {RandomNum}') #For debugging purposes
-
-    NumGuesses = 0
-
+#main
+def main(Min = 0, Max = 100, MaxGuess = None):
+    play = NumberGuessingGame(Min, Max, MaxGuess)
 
     while True:
-        UserNum = ValidInput()
-        if UserNum is None:
-            print("Game over, too many wrong attemps")
-            return
-        
-        elif UserNum is "QUIT":
-            print(f"Sorry you quit, the right number was {RandomNum}")
-            return
-        
-        NumGuesses += 1
+        UserNum = ValidInput(play)
 
-        if UserNum > RandomNum:
-            print("Too high")
-        elif UserNum < RandomNum:
-            print("Too low")
-        else:
-            print(f"YAY YOU WON THE NUMBER WAS:  {RandomNum}. It took you  {NumGuesses} guesses")
-            return
 
-         
+
+
 
 Guess()
 again = "Y"

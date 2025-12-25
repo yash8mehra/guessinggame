@@ -18,8 +18,8 @@ class NumberGuessingGame:
         self.GuessNum = GuessNum #how many guesses so far
 
     def MakeGuess(self, UserNum): #Checking for high/low or out of guesses
-        if (self.guesses >= self.MaxGuess) and (self.MaxGuess != None):
-            return "No Guess"
+        if (self.GuessNum >= self.MaxGuess) and (self.MaxGuess != None):
+            return "No_Guess"
 
         self.GuessNum += 1
 
@@ -46,14 +46,10 @@ def ValidInput(play):
             continue
     
 
-        if int(UserNum) < min or int(UserNum) > max:
+        if int(UserNum) < play.Min or int(UserNum) > play.Max:
             print(f"Number is out of bounds must be between {play.Min} and {play.Max}\n")
             tries += 1
             continue
-
-        if tries >= 3:
-            print("Too many attemps")
-            return
         
         return int(UserNum) 
 
@@ -67,19 +63,29 @@ def main(Min = 0, Max = 100, MaxGuess = None):
 
     while True:
         UserNum = ValidInput(play)
+        
+        if UserNum == "QUIT":
+            print(f'You lose the correct number was {play.RandomNum}')
+            return
+        
+        result = play.MakeGuess(UserNum)
+        if result == "No_Guess":
+            print(f'You ran out of guesses the correct number was {play.RandomNum}')
+            return
+        
+        
 
 
 
 
-
-Guess()
+main()
 again = "Y"
 
 while again == "Y" or again == "y":
     again = input("\nDo you want to play again? Y/N:   ")
 
     if again == "Y" or again == 'y':
-        Guess()
+        main()
     else:
         print("\nThankyou for playing with us have a great day!!")
 

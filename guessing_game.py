@@ -1,12 +1,23 @@
 #Just trying to build a simple guessing game and testing
 
 #NEW THINGS TO ADD
-#Guess counter(done), quit option(Done), replay without restarting(play again button done), difficulty levels (number ranges)
+#difficulty levels (number ranges), classes to make it cleaner, highscore tracker per level(later), 
 
 import random
 
 print('WELCOME TO THE GUESSING GAME')
 print('ENTER QUIT TO QUIT \n \n \n \n')
+
+
+class NumberGuessingGame:
+    def __init__(self, Min, Max, GuessNum):
+        self.Min = Min #This will basically be all 0 anyway but we dont want magic numbers :)
+        self.Max = Max
+        self.GuessNum = GuessNum
+        #Bottom are determined by the game Top are determined by the user
+        self.RandomNum = random.randint(Min,Max)
+        self.guesses = 0
+        
 
 
 def ValidInput():

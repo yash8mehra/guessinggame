@@ -1,7 +1,7 @@
 #Just trying to build a simple guessing game and testing
 
 #NEW THINGS TO ADD
-#highscore tracker per level, how many tries left, 
+#highscore tracker per level, how many tries left, dynamic range changes for easier levels, a hint for harder levels
 
 import random
 
@@ -34,11 +34,11 @@ class NumberGuessingGame:
 def ChooseLevel():
     levels = {
     "baby" : (0,50,None),
-    "easy" : (0,50, 10),
+    "easy" : (0,50, 25),
     "medium" : (0, 100, None),
     "hard" : (0,100,10),
     "extreme": (0,200,10),
-    "demon" : (0,1000,12)
+    "demon" : (0,1000,11)
     }
 
     tries = 0

@@ -1,7 +1,7 @@
 #Just trying to build a simple guessing game and testing
 
 #NEW THINGS TO ADD
-#difficulty levels (number ranges), classes to make it cleaner, highscore tracker per level(later), 
+#highscore tracker per level, how many tries left, 
 
 import random
 
@@ -29,6 +29,30 @@ class NumberGuessingGame:
         else:
             return "Correct"
         
+
+
+def ChooseLevel():
+    levels = {
+    "baby" : (0,50,None),
+    "easy" : (0,50, 10),
+    "medium" : (0, 100, None),
+    "hard" : (0,100,10),
+    "extreme": (0,200,10),
+    "demon" : (0,1000,12)
+    }
+
+    tries = 0
+    while tries < 3:
+        choice = input("So what will it be?\nbaby | easy | medium | hard | extreme | demon: ").lower()
+        if choice in levels:
+            Min, Max, MaxGuess = levels[choice] #tuple will need to unpack this
+            return Min, Max, MaxGuess           #^^^^^^
+        else:
+            tries += 1
+            print("Invalid choice. Try again.")
+
+    print("Too many invalid attempts.")
+    return None
 
 
 def ValidInput(play):
@@ -80,34 +104,12 @@ def main(Min, Max, MaxGuess):
             print(f"YAYYYY!! You got it in {play.NumGuess}")
             return
         
-def ChooseLevel():
-    levels = {
-    "baby" : (0,50,None),
-    "easy" : (0,50, 10),
-    "medium" : (0, 100, None),
-    "hard" : (0,100,10),
-    "extreme": (0,200,10),
-    "demon" : (0,1000,12)
-    }
-
-    tries = 0
-    while tries < 3:
-        choice = input("So what will it be: ").lower()
-        if choice in levels:
-            Min, Max, MaxGuess = levels[choice]
-            return Min, Max, MaxGuess
-        else:
-            tries += 1
-            print("Invalid choice. Try again.")
-
-    print("Too many invalid attempts.")
-    return None
         
         
 
 
 
-
+#GAME STARTTTT
 print('WELCOME TO THE GUESSING GAME')
 print('ENTER QUIT TO QUIT')
 print('WHAT DIFFICULTY WOULD YOU LIKE TO PLAY AT?')
@@ -116,7 +118,7 @@ print('Enter easy for slightly more difficulty level')
 print('Enter medium for a classic challenge')
 print("Enter hard if you like challenges")
 print("Enter extreme if you want to")
-print("Enter demon if you want to die")
+print("Enter demon if you want to die\n\n")
 
 
 
@@ -133,7 +135,7 @@ while True:
 
     again = input("\nDo you want to play again? Y/N: ").lower()
     if again != "y":
-        print("\nThank you for playing — have a great day!!")
+        print("\nThank you for playing!!!!")
         break
 
 

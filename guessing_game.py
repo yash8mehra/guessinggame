@@ -5,8 +5,6 @@
 
 import random
 
-print('WELCOME TO THE GUESSING GAME')
-print('ENTER QUIT TO QUIT \n \n \n \n')
 
 
 class NumberGuessingGame:
@@ -60,7 +58,7 @@ def ValidInput(play):
 
 
 #main
-def main(Min = 0, Max = 100, MaxGuess = None):
+def main(Min, Max, MaxGuess):
     play = NumberGuessingGame(Min, Max, MaxGuess)
 
     while True:
@@ -82,24 +80,61 @@ def main(Min = 0, Max = 100, MaxGuess = None):
             print(f"YAYYYY!! You got it in {play.NumGuess}")
             return
         
+def ChooseLevel():
+    levels = {
+    "baby" : (0,50,None),
+    "easy" : (0,50, 10),
+    "medium" : (0, 100, None),
+    "hard" : (0,100,10),
+    "extreme": (0,200,10),
+    "demon" : (0,1000,12)
+    }
 
+    tries = 0
+    while tries < 3:
+        choice = input("So what will it be: ").lower()
+        if choice in levels:
+            Min, Max, MaxGuess = levels[choice]
+            return Min, Max, MaxGuess
+        else:
+            tries += 1
+            print("Invalid choice. Try again.")
+
+    print("Too many invalid attempts.")
+    return None
         
         
 
 
 
 
-main()
-again = "Y"
+print('WELCOME TO THE GUESSING GAME')
+print('ENTER QUIT TO QUIT')
+print('WHAT DIFFICULTY WOULD YOU LIKE TO PLAY AT?')
+print('Enter baby for the easiest level')
+print('Enter easy for slightly more difficulty level')
+print('Enter medium for a classic challenge')
+print("Enter hard if you like challenges")
+print("Enter extreme if you want to")
+print("Enter demon if you want to die")
 
-while again == "Y" or again == "y":
-    again = input("\nDo you want to play again? Y/N:   ")
 
-    if again == "Y" or again == 'y':
-        main()
-    else:
-        print("\nThankyou for playing with us have a great day!!")
 
+
+
+
+
+while True:
+    difficulty = ChooseLevel()
+    if difficulty is None: #After invalid attempts
+        break
+
+    main(*difficulty) #Tuple unpacking
+
+    again = input("\nDo you want to play again? Y/N: ").lower()
+    if again != "y":
+        print("\nThank you for playing — have a great day!!")
+        break
 
 
 
